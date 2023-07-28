@@ -6,7 +6,6 @@ import {
   TableHeadProps,
   TableProps,
   TableRowProps,
-  ThemingProps,
 } from "@chakra-ui/react";
 
 export interface TAmazingCol<TRecord> {
@@ -53,10 +52,8 @@ export interface PaginatedTableProps {
     InferArrayElementType<PaginatedTableProps["dataSource"]>
   >[];
   /**The data to show in the table records */
-  dataSource: any[];
-  rowKey: (record: any) => string;
-  /**Styles to apply to the table container */
-  tableStyles?: TableContainerProps;
+  dataSource: Record<string, any>[];
+  rowKey: (record: Record<string, any>) => string;
   /**The table pagination. If false, does not pagination and hence, shows all the data in one page*/
   pagination?: ITablePagination | false;
   /**@optional - props that could be passed to the table container */
@@ -71,7 +68,7 @@ export interface PaginatedTableProps {
   trProps?: TableRowProps | IRecordProps<TableRowProps>;
 }
 
-type IRecordProps<TWhichProp, TRecord = any> = (
+type IRecordProps<TWhichProp, TRecord = Record<string, any>> = (
   record: TRecord,
   recordIndex: number
 ) => TWhichProp;

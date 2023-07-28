@@ -8,7 +8,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { memo, useEffect, useState } from "react";
-import Pagination from "./Components/Pagination";
+import Pagination from "./Pagination";
 import { PaginatedTableProps } from "./definitions";
 
 function PaginatedTable({
@@ -20,10 +20,9 @@ function PaginatedTable({
   tBodyProps = {},
   tHeadProps = {},
   tableProps = {},
-  tableStyles = {},
   trProps = {},
 }: PaginatedTableProps) {
-  const [dataToShow, setDataToShow] = useState<any[]>([]);
+  const [dataToShow, setDataToShow] = useState<Record<string, any>[]>([]);
 
   useEffect(() => {
     if (pagination) {

@@ -1,6 +1,6 @@
 import { Button, Flex, FlexProps } from "@chakra-ui/react";
 import { memo } from "react";
-import { ITablePagination } from "../definitions";
+import { ITablePagination } from "./definitions";
 
 interface IProps {
   paginationData: ITablePagination;
