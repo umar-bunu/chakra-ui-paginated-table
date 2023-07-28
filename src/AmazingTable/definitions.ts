@@ -1,4 +1,13 @@
-import { TableContainerProps, ThemingProps } from "@chakra-ui/react";
+import {
+  ButtonProps,
+  FlexProps,
+  TableBodyProps,
+  TableContainerProps,
+  TableHeadProps,
+  TableProps,
+  TableRowProps,
+  ThemingProps,
+} from "@chakra-ui/react";
 
 export interface TAmazingCol<TRecord> {
   title: React.ReactNode;
@@ -31,16 +40,38 @@ export interface ITablePagination {
    * @default- topRight
    */
   position?: "topLeft" | "topRight" | "bottomRight" | "bottomLeft";
+  /**Props to pass to the container of the pagination counts */
+  containerProps?: FlexProps;
+  /**The props to pass to the individual buttons */
+  btnProps?: ButtonProps;
+  /**the props to pass to the button determining the current page */
+  __selectedBtnProps?: ButtonProps;
 }
-export interface IAmazingProps {
+export interface PaginatedTableProps {
   /**The columns to show on the table */
-  columns: TAmazingCol<InferArrayElementType<IAmazingProps["dataSource"]>>[];
+  columns: TAmazingCol<
+    InferArrayElementType<PaginatedTableProps["dataSource"]>
+  >[];
   /**The data to show in the table records */
   dataSource: any[];
   rowKey: (record: any) => string;
-  colorScheme?: ThemingProps<"Table">["colorScheme"];
   /**Styles to apply to the table container */
   tableStyles?: TableContainerProps;
   /**The table pagination. If false, does not pagination and hence, shows all the data in one page*/
   pagination?: ITablePagination | false;
+  /**@optional - props that could be passed to the table container */
+  containerProps?: TableContainerProps;
+  /**@optional - props that could be passed to the Table */
+  tableProps?: TableProps;
+  /**@optional - props that could be passed to the TableHead */
+  tHeadProps?: TableHeadProps;
+  /**@optional - props that could be passed to the TableBody */
+  tBodyProps?: TableBodyProps;
+  /**@optional - props that could be passed to each Tr */
+  trProps?: TableRowProps | IRecordProps<TableRowProps>;
 }
+
+type IRecordProps<TWhichProp, TRecord = any> = (
+  record: TRecord,
+  recordIndex: number
+) => TWhichProp;

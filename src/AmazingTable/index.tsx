@@ -8,24 +8,29 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { memo, useEffect, useState } from "react";
-import AmazingPagination from "./Components/Pagination";
-import { IAmazingProps } from "./definitions";
+import Pagination from "./Components/Pagination";
+import { PaginatedTableProps } from "./definitions";
 
-function AmazingTable({
+function PaginatedTable({
   dataSource,
   columns,
   rowKey,
-  colorScheme,
   pagination,
-}: IAmazingProps) {
-  const [dataToShow, setdataToShow] = useState<any[]>([]);
+  containerProps = {},
+  tBodyProps = {},
+  tHeadProps = {},
+  tableProps = {},
+  tableStyles = {},
+  trProps = {},
+}: PaginatedTableProps) {
+  const [dataToShow, setDataToShow] = useState<any[]>([]);
 
   useEffect(() => {
     if (pagination) {
       const { page, pageSize } = pagination;
       const upperBoundary = page * pageSize;
       const lowerBoundary = page * pageSize - pageSize;
-      setdataToShow(
+      setDataToShow(
         pagination
           ? dataSource.filter(
               (_, dataIndex) =>
@@ -34,26 +39,31 @@ function AmazingTable({
           : dataSource
       );
     } else {
-      setdataToShow(dataSource);
+      setDataToShow(dataSource);
     }
   }, [pagination]);
 
   return (
     <>
-      {pagination && <AmazingPagination paginationData={pagination} />}
-      <TableContainer>
-        <Table colorScheme={colorScheme}>
-          <Thead>
+      {pagination && <Pagination paginationData={pagination} />}
+      <TableContainer {...containerProps}>
+        <Table {...tableProps}>
+          <Thead {...tHeadProps}>
             <Tr>
               {columns.map((eachCol) => (
                 <Th key={eachCol.key}>{eachCol.title}</Th>
               ))}
             </Tr>
           </Thead>
-          <Tbody>
+          <Tbody {...tBodyProps}>
             {dataToShow.map((eachRecord, recordIndex) => {
               return (
-                <Tr key={rowKey(eachRecord)}>
+                <Tr
+                  key={rowKey(eachRecord)}
+                  {...(typeof trProps === "function"
+                    ? trProps(eachRecord, recordIndex)
+                    : trProps)}
+                >
                   {columns.map((eachCol, colIndex) => {
                     const tdValue =
                       eachCol.dataIndex && eachRecord[eachCol.dataIndex];
@@ -79,10 +89,10 @@ function AmazingTable({
       {pagination &&
         pagination.position &&
         ["bottomRight", "bottomLeft"].includes(pagination.position) && (
-          <AmazingPagination paginationData={pagination} />
+          <Pagination paginationData={pagination} />
         )}
     </>
   );
 }
 
-export default memo(AmazingTable);
+export default memo(PaginatedTable);
