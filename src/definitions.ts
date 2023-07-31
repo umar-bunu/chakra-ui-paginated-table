@@ -7,13 +7,11 @@ import {
   TableProps,
   TableRowProps,
 } from "@chakra-ui/react";
+import React from "react";
 
-export interface ColType<TRecord> {
+export type ColType<TRecord> = {
   /**@required -  The title of the column. Rendered as a THead */
   title: React.ReactNode;
-
-  /**@required - which key of the record to get the data from*/
-  dataKey?: keyof TRecord | undefined;
 
   /**@required - The column key */
   key: string | number;
@@ -21,16 +19,37 @@ export interface ColType<TRecord> {
   /**@optional - how to render the data.
    * Please do pass it when the value of Record[dataKey] is an object or array
    */
-  render?: (
-    value: NonNullable<this["dataKey"]>,
-    record: TRecord,
-    index?: number
-  ) => React.ReactNode;
 
   /**@optional - How to align the data in the table cell throughtout the column */
   align?: "left" | "right" | "center";
-
   onClick?: (record: TRecord, index: number) => any;
+} & (IHadDataKey<TRecord> | INoDataKey<TRecord>);
+
+interface IHadDataKey<TRecord> {
+  /**@optional - which key of the record to get the data from*/
+  dataKey: keyof TRecord;
+  /**
+   * @optional - What should be rendered in each Table cell
+   * @warning - When Record[dataKey] is an object or array, do pass the render
+   * Method else it shall break
+   */
+  render?: (
+    value: this["dataKey"],
+    record: TRecord,
+    index?: number
+  ) => React.ReactNode;
+}
+
+interface INoDataKey<TRecord> {
+  /**@required - which key of the record to get the data from*/
+  dataKey?: undefined;
+  /**
+   * @optional - What should be rendered in each Table cell
+   * @warning - When Record[dataKey] is an object or array,
+   *
+   * do pass the render Method else your app will crash
+   */
+  render?: (record: TRecord, index?: number) => React.ReactNode;
 }
 
 export interface ITablePagination {
@@ -70,7 +89,19 @@ export interface TableType<T> {
    */
   rowKey: (record: T, rowIndex: number) => NonNullable<T[keyof T]> | number;
 
-  /**@optional - The table pagination. If false, does not pagination and hence, shows all the data in one page*/
+  /**
+   * @optional - The table pagination. If false, does not pagination and hence, shows all the data in one page
+   * @warning - It only manages what to show at which page,
+   * the pagination state must be managed from the parent component calling this.
+   * @example const [pageNumber, setPageNumber] = useState(1)
+   *  const pagination = {
+   *  page: pageNumber,
+        pageSize: 1,
+        total: dataSource.length,
+        onchange: newPage => setPageNumber(newPage)
+      }
+   *  <PaginatedTable<Record<string,string>> pagination={pagination}  dataSource={[dataSource]} columns={[]}/>
+   */
   pagination?: ITablePagination | false;
 
   /**@optional - props that could be passed to the table container */

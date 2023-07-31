@@ -1,8 +1,15 @@
 {
   "name": "chakra-paginated-table",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "main": "dist/index.js",
   "dependencies": {},
+  "keywords": [
+    "Chakra",
+    "react",
+    "chakra table",
+    "pagination",
+    "chakra-paginated-table"
+  ],
   "scripts": {
     "build": "tsc"
   },

@@ -7,7 +7,7 @@ interface IProps {
 }
 /**pagination component. By passing the props, you have access to pagination
  * And can control pagination.
- * @usage - If you desire to use table, consider using table pagination from this package.
+ * @usage - If you desire to use chakra table, consider using table pagination from this package.
  */
 function Pagination({ paginationData }: IProps) {
   const {
@@ -34,7 +34,7 @@ function Pagination({ paginationData }: IProps) {
       position && ["topLeft", "bottomLeft"].includes(position)
         ? "flex-start"
         : "flex-end",
-    bg: "blue",
+    bg: "inherit",
   };
 
   /**All the pages to display */
