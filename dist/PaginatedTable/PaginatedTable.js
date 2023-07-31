@@ -15,7 +15,7 @@ function PaginatedTable({ dataSource, columns, rowKey, pagination, containerProp
             const upperBoundary = page * pageSize;
             const lowerBoundary = page * pageSize - pageSize;
             setDataToShow(pagination
-                ? dataSource.filter((_, dataIndex) => dataIndex < upperBoundary && dataIndex >= lowerBoundary)
+                ? dataSource.filter((_, dataKey) => dataKey < upperBoundary && dataKey >= lowerBoundary)
                 : dataSource);
         }
         else {
@@ -26,7 +26,7 @@ function PaginatedTable({ dataSource, columns, rowKey, pagination, containerProp
                                 return ((0, jsx_runtime_1.jsx)(react_1.Tr, { ...(typeof trProps === "function"
                                         ? trProps(eachRecord, recordIndex)
                                         : trProps), children: columns.map((eachCol, colIndex) => {
-                                        const tdValue = eachCol.dataIndex && eachRecord[eachCol.dataIndex];
+                                        const tdValue = eachCol.dataKey && eachRecord[eachCol.dataKey];
                                         return ((0, jsx_runtime_1.jsx)(react_1.Td, { onClick: () => eachCol.onClick?.(eachRecord, recordIndex), children: eachCol.render?.(tdValue, eachRecord, recordIndex) ??
                                                 tdValue }, colIndex));
                                     }) }, rowKey(eachRecord)));

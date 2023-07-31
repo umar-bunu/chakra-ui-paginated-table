@@ -8,20 +8,30 @@ import {
   TableRowProps,
 } from "@chakra-ui/react";
 
-export interface TAmazingCol<TRecord> {
+export interface ColType<TRecord> {
+  /**@required -  The title of the column. Rendered as a THead */
   title: React.ReactNode;
-  dataIndex?: keyof TRecord | undefined;
+
+  /**@required - which key of the record to get the data from*/
+  dataKey: keyof TRecord;
+
+  /**@required - The column key */
   key: string | number;
+
+  /**@optional - how to render the data.
+   * Please do pass it when the value of Record[dataKey] is an object or array
+   */
   render?: (
-    value: NonNullable<this["dataIndex"]>,
+    value: NonNullable<this["dataKey"]>,
     record: TRecord,
     index?: number
   ) => React.ReactNode;
+
+  /**@optional - How to align the data in the table cell throughtout the column */
   align?: "left" | "right" | "center";
+
   onClick?: (record: TRecord, index: number) => any;
 }
-
-type InferArrayElementType<T> = T extends Array<infer U> ? U : never;
 
 export interface ITablePagination {
   /**The current page to show records for */
@@ -46,29 +56,42 @@ export interface ITablePagination {
   /**the props to pass to the button determining the current page */
   __selectedBtnProps?: ButtonProps;
 }
-export interface PaginatedTableProps {
-  /**The columns to show on the table */
-  columns: TAmazingCol<
-    InferArrayElementType<PaginatedTableProps["dataSource"]>
-  >[];
-  /**The data to show in the table records */
-  dataSource: Record<string, any>[];
-  rowKey: (record: Record<string, any>) => string;
-  /**The table pagination. If false, does not pagination and hence, shows all the data in one page*/
+export interface TableType<T> {
+  /**@required - The columns to show on the table */
+  columns: ColType<T>[];
+
+  /**@required - The data to show in the table records */
+  dataSource: T[];
+
+  /**
+   * @required - The key to pass for each record.
+   * @param rowIndex- the current index of the row
+   * @type {(record: T, rowIndex: number) => NonNullable<keyof T>}
+   */
+  rowKey: (record: T, rowIndex: number) => NonNullable<T[keyof T]> | number;
+
+  /**@optional - The table pagination. If false, does not pagination and hence, shows all the data in one page*/
   pagination?: ITablePagination | false;
+
   /**@optional - props that could be passed to the table container */
   containerProps?: TableContainerProps;
+
   /**@optional - props that could be passed to the Table */
   tableProps?: TableProps;
+
   /**@optional - props that could be passed to the TableHead */
   tHeadProps?: TableHeadProps;
+
   /**@optional - props that could be passed to the TableBody */
-  tBodyProps?: TableBodyProps;
-  /**@optional - props that could be passed to each Tr */
-  trProps?: TableRowProps | IRecordProps<TableRowProps>;
+  TBodyProps?: TableBodyProps;
+
+  /**@optional - props that could be passed to each Tr
+   * If used as a function, exposes the record and its index as a param
+   */
+  trProps?: TableRowProps | IRecordProps<TableRowProps, T>;
 }
 
-type IRecordProps<TWhichProp, TRecord = Record<string, any>> = (
+type IRecordProps<TWhichProp, TRecord> = (
   record: TRecord,
   recordIndex: number
 ) => TWhichProp;

@@ -10,6 +10,7 @@
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
@@ -25,3 +26,7 @@ yarn-error.log*
 # IDE
 .vscode
 .idea
+
+
+#src test file
+/src/Test.tsx

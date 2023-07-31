@@ -23,9 +23,9 @@ import { ChakraPaginatedTable } from 'chakra-paginated-table';
 2. Define your columns and data source:
 
 const columns = [
-{ title: 'Name', dataIndex: 'name', key: 'name' },
-{ title: 'Age', dataIndex: 'age', key: 'age' },
-{ title: 'Address', dataIndex: 'address', key: 'address' },
+{ title: 'Name', dataKey: 'name', key: 'name' },
+{ title: 'Age', dataKey: 'age', key: 'age' },
+{ title: 'Address', dataKey: 'address', key: 'address' },
 ];
 
 const dataSource = [
@@ -37,15 +37,21 @@ const dataSource = [
 3. Render the Chakra Paginated Table component:
 
 const MyTableComponent = () => {
-return <ChakraPaginatedTable columns={columns} dataSource={dataSource} />;
+return <ChakraPaginatedTable<Record<string,string>> columns={columns} dataSource={dataSource} />;
 };
+
+## Contributing
+
+If you want to contribute to this project, feel free to submit a pull request.
+
+[GitHub Repository](https://github.com/umar-bunu/chakra-ui-paginatated-table)
 
 ## Props
 
 The Chakra Paginated Table component accepts the following props:
 
-- columns (Array): An array of column configurations. Each column object should have title, dataIndex, and key properties.
-- dataSource (Array): An array of objects representing the data source for the table. Each object should have keys matching the dataIndex defined in the columns.
+- columns (Array): An array of column configurations. Each column object should have title, dataKey, and key properties.
+- dataSource (Array): An array of objects representing the data source for the table. Each object should have keys matching the dataKey defined in the columns.
 
 ## Customization
 
@@ -57,9 +63,9 @@ Chakra Paginated Table provides various customization options:
 
 - Localization: You can customize the text displayed for the pagination controls to support different languages.
 
-## Contributing
+## About the Author
 
-Contributions are welcome! If you find any issues or have ideas for improvements, please feel free to open an issue or submit a pull request.
+Hi, I'm [Umar Bunu](https://github.com/umar-bunu). I'm a software developer passionate about open-source projects.
 
 ## License
 

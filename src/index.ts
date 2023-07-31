@@ -1,2 +1,3 @@
-export { default as PaginatedTable } from "./PaginatedTable/PaginatedTable";
-export { default as Pagination } from "./PaginatedTable/Pagination";
+export { default as PaginatedTable } from "./PaginatedTable";
+export { default as Pagination } from "./Pagination";
+export { ColType, ITablePagination, TableType } from "./definitions";
