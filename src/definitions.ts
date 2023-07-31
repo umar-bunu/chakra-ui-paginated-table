@@ -13,7 +13,7 @@ export interface ColType<TRecord> {
   title: React.ReactNode;
 
   /**@required - which key of the record to get the data from*/
-  dataKey: keyof TRecord;
+  dataKey?: keyof TRecord | undefined;
 
   /**@required - The column key */
   key: string | number;

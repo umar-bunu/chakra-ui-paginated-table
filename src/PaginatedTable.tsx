@@ -51,11 +51,20 @@ function PaginatedTable<T>({
     } else {
       setDataToShow(dataSource);
     }
-  }, [pagination]);
+  }, [pagination, dataSource]);
 
   return (
     <>
-      {pagination && <Pagination paginationData={pagination} />}
+      {pagination &&
+        pagination.position &&
+        !["bottomLeft", "bottomRight"].includes(pagination.position) && (
+          <Pagination paginationData={pagination} />
+        )}
+
+      {pagination && !pagination.position && (
+        <Pagination paginationData={pagination} />
+      )}
+
       <TableContainer {...containerProps}>
         <Table {...tableProps}>
           <Thead {...tHeadProps}>
@@ -85,31 +94,22 @@ function PaginatedTable<T>({
                     ? trProps(eachRecord as any, recordIndex)
                     : trProps)}
                 >
-                  {columns.map(
-                    (
-                      eachCol: {
-                        dataKey: any;
-                        onClick?: any;
-                        render?: any;
-                      },
-                      colIndex: any
-                    ) => {
-                      const tdValue =
-                        eachCol.dataKey && eachRecord[eachCol.dataKey];
+                  {columns.map((eachCol, colIndex: number) => {
+                    const tdValue =
+                      eachCol.dataKey && eachRecord[eachCol.dataKey];
 
-                      return (
-                        <Td
-                          key={colIndex}
-                          onClick={() =>
-                            eachCol.onClick?.(eachRecord, recordIndex)
-                          }
-                        >
-                          {eachCol.render?.(tdValue, eachRecord, recordIndex) ??
-                            tdValue}
-                        </Td>
-                      );
-                    }
-                  )}
+                    return (
+                      <Td
+                        key={colIndex}
+                        onClick={() =>
+                          eachCol.onClick?.(eachRecord, recordIndex)
+                        }
+                      >
+                        {eachCol.render?.(tdValue, eachRecord, recordIndex) ??
+                          tdValue}
+                      </Td>
+                    );
+                  })}
                 </Tr>
               );
             })}
