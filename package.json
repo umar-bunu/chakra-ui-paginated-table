@@ -2,6 +2,9 @@
   "name": "chakra-paginated-table",
   "version": "1.5.1",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "dependencies": {},
   "keywords": [
     "Chakra",
