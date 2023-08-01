@@ -56,14 +56,13 @@ function PaginatedTable<T>({
 
   return (
     <>
-      /**if pagination is defined and the position is set to top, render at top
-      */
+      {/* if pagination is defined and the position is set to top, render at top */}
       {pagination &&
         pagination.position &&
         !["bottomLeft", "bottomRight"].includes(pagination.position) && (
           <Pagination paginationData={pagination} />
         )}
-      /**if pagination is defined but position not defined, render at top */
+      {/* if pagination is defined but position not defined, render at top  */}
       {pagination && !pagination.position && (
         <Pagination paginationData={pagination} />
       )}
