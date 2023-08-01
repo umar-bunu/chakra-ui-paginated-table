@@ -31,7 +31,7 @@ interface IHadDataKey<TRecord> {
   /**
    * @optional - What should be rendered in each Table cell
    * @warning - When Record[dataKey] is an object or array, do pass the render
-   * Method else it shall break
+   * Method else it [Object shall be rendered]
    */
   render?: (
     value: this["dataKey"],

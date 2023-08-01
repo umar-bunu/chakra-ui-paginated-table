@@ -97,7 +97,10 @@ function PaginatedTable<T>({
                   {columns.map((eachCol, colIndex: number) => {
                     const tdValue =
                       eachCol.dataKey && eachRecord[eachCol.dataKey];
-
+                    const cellRender =
+                      typeof eachCol["dataKey"] != "undefined"
+                        ? eachCol.render?.(tdValue, eachRecord, recordIndex)
+                        : eachCol.render?.(eachRecord, recordIndex as any);
                     return (
                       <Td
                         key={colIndex}
@@ -105,8 +108,8 @@ function PaginatedTable<T>({
                           eachCol.onClick?.(eachRecord, recordIndex)
                         }
                       >
-                        {eachCol.render?.(tdValue, eachRecord, recordIndex) ??
-                          tdValue}
+                        {cellRender ??
+                          (typeof tdValue === "object" ? "[Object]" : tdValue)}
                       </Td>
                     );
                   })}
