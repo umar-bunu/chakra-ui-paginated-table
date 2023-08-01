@@ -29,9 +29,10 @@ function PaginatedTable<T>({
   pagination,
   containerProps = {},
   TBodyProps: tBodyProps = {},
-  tHeadProps = {},
-  tableProps = {},
-  trProps = {},
+  THeadProps: tHeadProps = {},
+  TableProps: tableProps = {},
+  TrProps: TrProps = {},
+  ThProps = {},
 }: TableType<T extends Record<string, any> ? T : never>) {
   const [dataToShow, setDataToShow] = useState<T[]>([]);
 
@@ -55,16 +56,17 @@ function PaginatedTable<T>({
 
   return (
     <>
+      /**if pagination is defined and the position is set to top, render at top
+      */
       {pagination &&
         pagination.position &&
         !["bottomLeft", "bottomRight"].includes(pagination.position) && (
           <Pagination paginationData={pagination} />
         )}
-
+      /**if pagination is defined but position not defined, render at top */
       {pagination && !pagination.position && (
         <Pagination paginationData={pagination} />
       )}
-
       <TableContainer {...containerProps}>
         <Table {...tableProps}>
           <Thead {...tHeadProps}>
@@ -80,7 +82,9 @@ function PaginatedTable<T>({
                     | null
                     | undefined;
                 }) => (
-                  <Th key={eachCol.key}>{eachCol.title}</Th>
+                  <Th {...ThProps} key={eachCol.key}>
+                    {eachCol.title}
+                  </Th>
                 )
               )}
             </Tr>
@@ -90,9 +94,9 @@ function PaginatedTable<T>({
               return (
                 <Tr
                   key={rowKey(eachRecord as any, recordIndex) as any}
-                  {...(typeof trProps === "function"
-                    ? trProps(eachRecord as any, recordIndex)
-                    : trProps)}
+                  {...(typeof TrProps === "function"
+                    ? TrProps(eachRecord as any, recordIndex)
+                    : TrProps)}
                 >
                   {columns.map((eachCol, colIndex: number) => {
                     const tdValue =

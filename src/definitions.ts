@@ -2,6 +2,7 @@ import {
   ButtonProps,
   FlexProps,
   TableBodyProps,
+  TableColumnHeaderProps,
   TableContainerProps,
   TableHeadProps,
   TableProps,
@@ -26,7 +27,7 @@ export type ColType<TRecord> = {
 } & (IHadDataKey<TRecord> | INoDataKey<TRecord>);
 
 interface IHadDataKey<TRecord> {
-  /**@optional - which key of the record to get the data from*/
+  /**@optional which key of the record to get the data from*/
   dataKey: keyof TRecord;
   /**
    * @optional - What should be rendered in each Table cell
@@ -34,7 +35,7 @@ interface IHadDataKey<TRecord> {
    * Method else it [Object shall be rendered]
    */
   render?: (
-    value: this["dataKey"],
+    value: TRecord[keyof TRecord],
     record: TRecord,
     index?: number
   ) => React.ReactNode;
@@ -108,18 +109,26 @@ export interface TableType<T> {
   containerProps?: TableContainerProps;
 
   /**@optional - props that could be passed to the Table */
-  tableProps?: TableProps;
+  TableProps?: TableProps;
 
   /**@optional - props that could be passed to the TableHead */
-  tHeadProps?: TableHeadProps;
+  THeadProps?: TableHeadProps;
 
   /**@optional - props that could be passed to the TableBody */
   TBodyProps?: TableBodyProps;
 
-  /**@optional - props that could be passed to each Tr
+  /**
+   * @optional  props that could be passed to each Tr
    * If used as a function, exposes the record and its index as a param
    */
-  trProps?: TableRowProps | IRecordProps<TableRowProps, T>;
+  TrProps?: TableRowProps | IRecordProps<TableRowProps, T>;
+  /**ThProps */
+  /**
+   * @optional  props that could be passed to each Tr
+   * If used as a function, exposes the record and its index as a param
+   */
+  ThProps?: TableColumnHeaderProps;
+  /**ThProps */
 }
 
 type IRecordProps<TWhichProp, TRecord> = (
