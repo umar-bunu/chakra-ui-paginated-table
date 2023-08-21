@@ -14,7 +14,8 @@
     "chakra-paginated-table"
   ],
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepublishOnly": "yarn build"
   },
   "peerDependencies": {
     "@chakra-ui/descendant": "2.1.4",
