@@ -1,4 +1,4 @@
-import { PaginatedTable, ColType } from "../../src"
+import { PaginatedTable, ColType } from "chakra-paginated-table"
 
 const columns: ColType<{ firstName: string; lastName: string }>[] = [
   {
