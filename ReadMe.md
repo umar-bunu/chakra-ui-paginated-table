@@ -27,7 +27,7 @@ To use Chakra Paginated Table in your project, follow these steps:
 1. **Import the necessary components:**
 
 ```javascript
-import { ChakraPaginatedTable } from "chakra-paginated-table"
+import { ChakraPaginatedTable } from "chakra-paginated-table";
 ```
 
 2. **Define your columns and data source:**
@@ -37,20 +37,20 @@ const columns = [
   { title: "Name", dataKey: "name", key: "name" },
   { title: "Age", dataKey: "age", key: "age" },
   { title: "Address", dataKey: "address", key: "address" },
-]
+];
 
 const dataSource = [
   { key: "1", name: "John Doe", age: 30, address: "123 Main St" },
   { key: "2", name: "Jane Smith", age: 25, address: "456 Elm St" },
   // Add more data...
-]
+];
 ```
 
 3. **Render the Chakra Paginated Table component:**
 
 ```javascript
 const MyTableComponent = () => {
-  return <ChakraPaginatedTable<Record<string,string>> columns={columns} dataSource={dataSource} />;
+  return <ChakraPaginatedTable columns={columns} dataSource={dataSource} />;
 };
 ```
 
