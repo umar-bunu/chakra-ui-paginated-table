@@ -43,7 +43,7 @@ function Pagination({ paginationData }: IProps) {
 
   const assignNewPage = (newPage: ITablePagination["page"]) =>
     onchange?.(newPage, pageSize);
-
+  console.log({ containerProps });
   return (
     <Flex {...paginationStyle} {...containerProps}>
       {new Array(pages).fill("*").map((_, fieldIndex) => {
