@@ -1,6 +1,6 @@
 {
   "name": "chakra-paginated-table",
-  "version": "1.5.10",
+  "version": "1.5.11",
   "main": "dist/index.js",
   "files": [
     "dist"
