@@ -1,5 +1,5 @@
 # Ignore everything by default
-*
+/*
 
 # Whitelist the files and directories you want to include in the npm package
 !/dist/

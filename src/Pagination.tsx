@@ -24,6 +24,7 @@ function Pagination({ paginationData }: IProps) {
       color: "white",
       borderRadius: 0,
     },
+    containerProps = {},
     __selectedBtnProps = {},
   } = paginationData;
 
@@ -44,7 +45,7 @@ function Pagination({ paginationData }: IProps) {
     onchange?.(newPage, pageSize);
 
   return (
-    <Flex {...paginationStyle}>
+    <Flex {...paginationStyle} {...containerProps}>
       {new Array(pages).fill("*").map((_, fieldIndex) => {
         const isSelected = fieldIndex + 1 === page;
         return (
