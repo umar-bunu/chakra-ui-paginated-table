@@ -1,4 +1,3 @@
-Sure, here's a styled version of your `readme.md`:
 
 ---
 
